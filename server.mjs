@@ -35,6 +35,23 @@ const UTCtoISOFormat = (dateTimeRange, options) => {
     return { startLocalISO, endLocalISO };
 };
 
+// Base64解码函数
+const decodeBase64Payload = (base64Payload) => {
+    try {
+        // 1. 将Base64字符串解码为二进制数据
+        const buffer = Buffer.from(base64Payload, 'base64');
+
+        // 2. 将二进制数据转换为UTF-8字符串
+        const jsonString = buffer.toString('utf-8');
+
+        // 3. 将JSON字符串解析为JavaScript对象
+        return JSON.parse(jsonString);
+    } catch (error) {
+        console.error('Base64解码错误:', error);
+        throw new Error('无效的Base64格式');
+    }
+};
+
 // Express rate limit configuration
 const limiter = rateLimit({
     windowMs: 5 * 60 * 1000, // 5 minutes
@@ -70,15 +87,25 @@ db.serialize(() => {
 });
 
 app.post('/query', limiter, async (req, res) => {
-    console.log(req.body);
-    const { idArray, dateTimeRange, mode } = req.body;
 
-    if (idArray.length === 0 || !mode) {
-        res.status(400).json({ error: 'Invalid request body' });
-        return;
-    }
 
     try {
+        if (!req.body || typeof req.body !== 'object' || !req.body.data) {
+            return res.status(400).json({ 
+                error: '请求格式无效，需要{data: base64String}格式' 
+            });
+        }
+        
+        
+        console.log(req.body);
+        const { idArray, dateTimeRange, mode } = decodeBase64Payload(req.body.data);
+        console.log('decoded:', { idArray, dateTimeRange, mode });
+
+
+        if (idArray.length === 0 || !mode) {
+            res.status(400).json({ error: 'Invalid request body' });
+            return;
+        }
         // 步骤1：根据privkey查询对应的hashed_adv_key
         const keyMapQuery = `
             SELECT private_key, hashed_adv_key
@@ -130,12 +157,12 @@ app.post('/query', limiter, async (req, res) => {
                     else resolve(rows);
                 });
             });
-            // 5. 将结果中的id替换回原始privkey
+/*             // 5. 将结果中的id替换回原始privkey
             const result = rows.map(row => ({
                 ...row,
                 id: hashedToPriv.get(row.id) || row.id // 保留原值如果找不到映射
-            }));
-            res.status(200).json({ data: result });
+            })); */
+            res.status(200).json({ data: rows });
         }
         else if (mode === "timerange") {
             if (!dateTimeRange?.start || !dateTimeRange?.end) {
@@ -157,12 +184,12 @@ app.post('/query', limiter, async (req, res) => {
                     else resolve(rows);
                 });
             });
-            // 5. 将结果中的id替换回原始privkey
+/*             // 5. 将结果中的id替换回原始privkey
             const result = rows.map(row => ({
                 ...row,
                 id: hashedToPriv.get(row.id) || row.id // 保留原值如果找不到映射
-            }));
-            res.status(200).json({ data: result });
+            })); */
+            res.status(200).json({ data: rows });
         }
 
     } catch (err) {
