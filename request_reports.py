@@ -7,8 +7,8 @@ import base64
 import json
 import hashlib
 import struct
-import asyncio  # 新增 asyncio
-import aiohttp  # 替换 requests
+import asyncio
+import aiohttp
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.asymmetric import ec
 from cryptography.hazmat.backends import default_backend
@@ -83,8 +83,32 @@ async def fetch_report(session, semaphore, id, auth, headers, startdate, unixEpo
 
 async def main_async(args, privkeys, names):
     """异步主函数"""
-    # 初始化数据库
+    # 初始化数据库 - 确保文件存在和表结构正确
     db_path = os.path.dirname(os.path.realpath(__file__)) + '/reports.db'
+
+    # 创建数据库文件（如果不存在）
+    sq3db = sqlite3.connect(db_path)
+    sq3 = sq3db.cursor()
+
+    # 创建报告明细表（如果不存在）
+    sq3.execute('''CREATE TABLE IF NOT EXISTS reports_detail (
+                    id_short TEXT, 
+                    timestamp INTEGER,
+                    isodatetime TEXT,
+                    datePublished INTEGER,
+                    latitude REAL,
+                    longitude REAL,
+                    payload TEXT, 
+                    id TEXT, 
+                    status INTEGER,
+                    statusCode INTEGER, 
+                    PRIMARY KEY(id, timestamp)
+                 )''')
+    sq3db.commit()
+    sq3.close()
+    sq3db.close()
+
+    # 重新打开连接用于后续操作
     sq3db = sqlite3.connect(db_path)
     sq3 = sq3db.cursor()
 
@@ -157,8 +181,28 @@ async def main_async(args, privkeys, names):
                 str(tag['lat']) + ',' + str(tag['lon'])
             found.add(tag['key'])
             ordered.append(tag)
-            sq3.execute(
-                f"INSERT OR REPLACE INTO reports_detail VALUES ('{names[report['id']]}', {timestamp},'{tag['isodatetime']}', {report['datePublished']}, {tag['lat']}, {tag['lon']},'{report['payload']}', '{report['id']}',{tag['status']},{report['statusCode']})")
+
+            # 安全地插入数据（使用参数化查询）
+            try:
+                sq3.execute('''
+                    INSERT OR REPLACE INTO reports_detail 
+                    (id_short, timestamp, isodatetime, datePublished, latitude, longitude, payload, id, status, statusCode) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (
+                    names[report['id']],
+                    timestamp,
+                    tag['isodatetime'],
+                    report['datePublished'],
+                    tag['lat'],
+                    tag['lon'],
+                    report['payload'],
+                    report['id'],
+                    tag['status'],
+                    report['statusCode']
+                ))
+            except sqlite3.Error as e:
+                print(f"数据库错误: {e}")
+                print(f"无法插入报告: {report}")
 
     # 输出结果
     print(f'{len(ordered)} reports processed.')
