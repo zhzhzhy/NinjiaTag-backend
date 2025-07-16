@@ -1,4 +1,4 @@
-# NinjiaTag(DIY你自己的airtag)
+　　# NinjiaTag(DIY你自己的airtag)
 DIY 兼容 FindMy 网络的定位标签/设备（长期记录）
 服务器端运行 FindMy 网络后台抓取位置数据并存入数据库，无需部署 Mac 电脑或虚拟机，也不需要拥有 iPhone 与其上面的查找 app 即可查看回溯任意时间段内您 DIY 的定位标签/设备的位置、轨迹（注册 Apple-ID 时需要借用一下别人的 iPhone）。
 目前实现的功能：
@@ -30,11 +30,14 @@ Only a free Apple ID is required, with SMS 2FA properly setup. If you don't have
    - nRF5x 前往 [openhaystack-firmware](https://github.com/acalatrava/openhaystack-firmware/releases) 下载所需固件(nrf51_firmware.bin或nrf52_firmware.bin) 
    - [TLSR825X 芯片](https://github.com/biemster/FindMy/blob/main/Telink_TLSR825X/README.md)，比如米家温湿度计2(型号 LYWSD03MMC)也可以刷机成定位标签，但我没有尝试
 
-2. 执行本仓库的 `python3 generate_keys.py` 来生成密钥对(在 `keys/` 目录下)。(注意: 必须安装依赖 `cryptography`. 用 `pip3 install cryptography` 命令安装)
+2. 执行本仓库的keygen目录下 `python3 generate_keys.py` 来生成密钥对(在 `keys/` 目录下)。(注意: 必须安装依赖 `cryptography`. 用 `pip3 install cryptography` 命令安装)
    Windows 或 Linux 下都可以执行。
+   
 
 3. 将固件刷入设备
-   这里说一下，`generate_keys.py` 可以指定参数 `python3  generate_keys.py -n 50` 来生成包含多个密钥的 keyfile，其中 50 就是个数，可以自己改。不指定则默认单个密钥，也就是定位标签运行过程中只有一个蓝牙 Mac 地址（密钥其实就是加密了的 Mac 地址），而多密钥就是定位标签可以定时更换 Mac 地址(称为滚动密钥，苹果 AirTag 就是这样)。
+说明：generate_keys.py在原项目上做了修改，支持多物品多密钥自定义批量生成，如生成5个密钥的8个物品(在不同文件夹)，执行```python3 generate_keys.py -n 5 -i 8```
+
+  `generate_keys.py` 可以指定参数 `python3  generate_keys.py -n 50` 来生成包含多个密钥的 keyfile，其中 50 就是个数，可以自己改。不指定则默认单个密钥，也就是定位标签运行过程中只有一个蓝牙 Mac 地址（密钥其实就是加密了的 Mac 地址），而多密钥就是定位标签可以定时更换 Mac 地址(称为滚动密钥，苹果 AirTag 就是这样)。
    
    经过测试，带密钥轮换机制的标签，其位置会被更频繁的上报，即位置更新更频繁，更能被精确定位。推荐使用多密钥的 keyfile。但是，密钥轮换会增加一定功耗。
 ## 服务端安装部署
