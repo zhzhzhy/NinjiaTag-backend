@@ -172,13 +172,13 @@ npm i
 - 查看进程状态 
 "pm2 list" 显示所有进程及资源占用
 - 停止进程 
-"pm2 stop web-server" 停止指定进程（保留配置）
+"pm2 stop server" 停止指定进程（保留配置）
 - 重启进程 
-"pm2 restart web-server" 零停机重载（适用服务更新）
+"pm2 restart server" 零停机重载（适用服务更新）
 - 监控资源 
 "pm2 monit" 实时显示 CPU/内存
 - 删除进程 
-"pm2 delete web-server" 彻底移除进程
+"pm2 delete server" 彻底移除进程
 
 ### 6.服务器后端地址远程
 
