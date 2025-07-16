@@ -106,7 +106,9 @@ pip3 install aiohttp requests cryptography pycryptodome srp pbkdf2 -i https://py
 
 ##### venv虚拟环境pip3安装相关依赖
 
-```./venv/bin/pip3 install aiohttp requests cryptography pycryptodome srp pbkdf2 -i https://pypi.tuna.tsinghua.edu.cn/simple```
+```
+./venv/bin/pip3 install aiohttp requests cryptography pycryptodome srp pbkdf2 -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
 
 在python3 venv环境执行
 ```./venv/bin/python3 request_reports.py```
