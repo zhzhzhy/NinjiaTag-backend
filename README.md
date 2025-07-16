@@ -141,9 +141,7 @@ npm i
 "server.mjs"（数据库查询主服务）：
 ```pm2 start server.mjs --name "query-server" --watch```
 
-   - 
 "--name"：自定义进程名称（便于管理）。
-   - 
 "--watch"：监听文件改动自动重启。
 - 运行 
 "request_reports.mjs"（抓取位置数据任务）：
