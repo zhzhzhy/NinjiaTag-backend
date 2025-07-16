@@ -178,7 +178,7 @@ npm i
 - 删除进程 
 "pm2 delete web-server" 彻底移除进程
 
-### 服务器后端地址远程
+### 6.服务器后端地址远程
 
 前端页面需访问数据查询服务 url 地址" 形如 `http://服务器ip:3000`。  
   若要在公网使用，需将本地部署服务公开到公网，可以用 路由器端口映射 或 内网穿透(比如有公网IP可使用端口映射+DDNS，或使用反向代理 [ngrok](https://ngrok.com/) 、[节点小宝](https://iepose.com/)、[ZeroNews](https://www.zeronews.cc/) 都有免费版；[花生壳](https://console.hsk.oray.com/) 9块9永久用，每月免费1G流量) 
