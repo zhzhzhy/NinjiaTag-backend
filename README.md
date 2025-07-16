@@ -180,7 +180,7 @@ npm i
 
 ## 前端页面
 
-前端页面可以自行部署，也可以使用我提供的页面[bd8cca.atomgit.net/NinjiaTagPage/](bd8cca.atomgit.net/NinjiaTagPage/)，页面只是一个查询框架，建议使用我提供的页面，所有打包的前端页面位于[https://atomgit.com/bd8cca/NinjiaTagPage](https://atomgit.com/bd8cca/NinjiaTagPage) 项目，可自行下载部署
+前端页面可以自行部署，也可以使用我提供的页面[https://bd8cca.atomgit.net/NinjiaTagPage/](https://bd8cca.atomgit.net/NinjiaTagPage/)，页面只是一个查询框架，建议使用我提供的页面，所有打包的前端页面位于[https://atomgit.com/bd8cca/NinjiaTagPage](https://atomgit.com/bd8cca/NinjiaTagPage) 项目，可自行下载部署
 
 
 
