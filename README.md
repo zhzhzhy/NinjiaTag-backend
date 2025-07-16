@@ -3,10 +3,10 @@ DIY 兼容 FindMy 网络的定位标签/设备（长期记录）
 服务器端运行 FindMy 网络后台抓取位置数据并存入数据库，无需部署 Mac 电脑或虚拟机，也不需要拥有 iPhone 与其上面的查找 app 即可查看回溯任意时间段内您 DIY 的定位标签/设备的位置、轨迹（注册 Apple-ID 时需要借用一下别人的 iPhone）。
 目前实现的功能：
 - 服务器端后台运行 request_report 获取位置，定期下载位置数据并储存在本地服务器数据库，储存时间不限（目前市面上主流产品记录时长最多为 7 天），轨迹可永久保存于服务器。
--支持任意时间段任意物品轨迹查询和显示，支持轨迹点的经纬度和时间点显示，可随意缩放查看，方便回溯。
--支持热图显示（ Hotspot ），类似地理信息系统的人流密度显示，经常去过的地方颜色更深，不去或偶尔去的地方颜色浅。
--Web 前端支持密钥管理
--地图采用开源的 Mapbox-GL 三维地图引擎，支持三维地形显示，渲染更加美观。
+- 支持任意时间段任意物品轨迹查询和显示，支持轨迹点的经纬度和时间点显示，可随意缩放查看，方便回溯。
+- 支持热图显示（ Hotspot ），类似地理信息系统的人流密度显示，经常去过的地方颜色更深，不去或偶尔去的地方颜色浅。
+- Web 前端支持密钥管理
+- 地图采用开源的 Mapbox-GL 三维地图引擎，支持三维地形显示，渲染更加美观。
 
 - Query Apple's Find My network,write into sqlite database,
 convert to tracks(KML/GPX etc.)
@@ -85,7 +85,7 @@ Registry Mirrors:
 开始时会提示输入Apple ID和密码，然后是2FA短信验证，完成后能正常执行位置数据拉取。
 # 安装nodejs
 执行以下命令安装nodejs和npm用于提供后端服务
-```
+```bash
 # Download and install nvm:
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 # in lieu of restarting the shell
