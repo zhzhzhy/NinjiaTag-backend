@@ -1,4 +1,5 @@
-# NinjiaTag(DIY你自己的airtag)
+# NinjiaTag
+## DIY你自己的airtag
 DIY 兼容 FindMy 网络的定位标签/设备（长期记录）
 服务器端运行 FindMy 网络后台抓取位置数据并存入数据库，无需部署 Mac 电脑或虚拟机，也不需要拥有 iPhone 与其上面的查找 app 即可查看回溯任意时间段内您 DIY 的定位标签/设备的位置、轨迹（注册 Apple-ID 时需要借用一下别人的 iPhone）。
 目前实现的功能：
