@@ -41,11 +41,6 @@ SWDCLK、SWDIO、GND、VDD(或3.3V或VCC)。GND 和 VDD 可以使用纽扣电池
 
 
 
-- nRF52810模块  
-![nRF52810模块](../images/nRF5x/模块1.jpg) 
-![nRF52810模块原理图](../images/nRF5x/模块2.jpg)
-
-
 # 刷机
 - 执行本仓库的 `python3 generate_keys.py -n 50` 来生成密钥对(在 `keys/` 目录下)。(注意: 必须安装依赖 `cryptography`. 用 `pip3 install cryptography` 命令安装)
 Windows 或 Linux 下都可以执行。其中 `-n 50` 是指定生成 50 个密钥对，可以按需修改
