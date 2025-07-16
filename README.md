@@ -84,10 +84,19 @@ Registry Mirrors:
  ###  3. 下载本项目到本地
  使用git clone 或下载zip解压
  ### 4.安装python3相关库
-安装 python3，在python3 venv环境执行python3 request_reports.py
+ 
+ #### 基础网络和加密组件
+
+安装 python3，并使用pip3安装相关依赖
+ ```
+pip3 install aiohttp requests cryptography pycryptodome srp pbkdf2 -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+在python3 venv环境执行
+```python3 request_reports.py```
 
 开始时会提示输入Apple ID和密码，然后是2FA短信验证，完成后能正常执行位置数据拉取。
-# 安装nodejs
+### 安装nodejs
 执行以下命令安装nodejs和npm用于提供后端服务
 ```bash
 # Download and install nvm:
@@ -108,6 +117,8 @@ npm -v # Should print "10.9.2".
 npm i
 ```
 安装node_modules相关依赖
+
+### 安装pm2 守护定时执行
 
 # 基于的开源项目
 查找部分的工作，主要基于openhaystack开源项目修改后实现，感谢https://github.com/seemoo-lab/openhaystack/项目的所做工作
