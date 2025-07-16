@@ -41,6 +41,8 @@ Only a free Apple ID is required, with SMS 2FA properly setup. If you don't have
   `generate_keys.py` 可以指定参数 `python3  generate_keys.py -n 50` 来生成包含多个密钥的 keyfile，其中 50 就是个数，可以自己改。不指定则默认单个密钥，也就是定位标签运行过程中只有一个蓝牙 Mac 地址（密钥其实就是加密了的 Mac 地址），而多密钥就是定位标签可以定时更换 Mac 地址(称为滚动密钥，苹果 AirTag 就是这样)。
    
    经过测试，带密钥轮换机制的标签，其位置会被更频繁的上报，即位置更新更频繁，更能被精确定位。推荐使用多密钥的 keyfile。但是，密钥轮换会增加一定功耗。
+
+   [nrf5x烧录教程](flash_guide/nrf5x.md)
 ## 服务端安装部署
 ### 1. 创建一个 docker 网络
 
