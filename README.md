@@ -178,6 +178,12 @@ npm i
 - 删除进程 
 "pm2 delete web-server" 彻底移除进程
 
+### 服务器后端地址远程
+
+前端页面需访问数据查询服务 url 地址" 形如 `http://服务器ip:3000`。  
+  若要在公网使用，需将本地部署服务公开到公网，可以用 路由器端口映射 或 内网穿透(比如有公网IP可使用端口映射+DDNS，或使用反向代理 [ngrok](https://ngrok.com/) 、[节点小宝](https://iepose.com/)、[ZeroNews](https://www.zeronews.cc/) 都有免费版；[花生壳](https://console.hsk.oray.com/) 9块9永久用，每月免费1G流量) 
+或使用Zerotier tailscale之类的的方式实现。具体操作不属于本文范畴，请自行搜索。
+
 ## 前端页面
 
 前端页面可以自行部署，也可以使用我提供的页面[https://bd8cca.atomgit.net/NinjiaTagPage/](https://bd8cca.atomgit.net/NinjiaTagPage/)，页面只是一个查询框架，建议使用我提供的页面。
