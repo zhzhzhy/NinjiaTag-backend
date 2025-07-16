@@ -208,8 +208,9 @@ npm i
 - Query Apple's Find My network, based on all the hard work of https://github.com/seemoo-lab/openhaystack/ and @hatomist and @JJTech0130 and @Dadoum
 
 - 并且感谢JJTech0130降低部署门槛，目前服务端部署不再需要mac设备了
- https://github.com/JJTech0130/pypush.
-
+ https://github.com/JJTech0130/pypush
+- lovelyelfpop大佬开发的安卓apk也可以用于本项目，感谢他本地化app做的很多工作
+[https://gitee.com/lovelyelfpop/macless-haystack](https://gitee.com/lovelyelfpop/macless-haystack)
 
 ## 杂项待开发 convert the data to KML
 
