@@ -125,7 +125,7 @@ npm i
 
 1. 通过 npm 全局安装
 
-``npm install pm2 -g```
+```npm install pm2 -g```
 
 - 验证安装：执行 
 "pm2 --version"，输出版本号即安装成功。
