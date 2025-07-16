@@ -182,13 +182,6 @@ npm i
 
 前端页面需访问数据查询服务 url 地址" 形如 `http://服务器ip:3000`。  
 
-在前端页面有配置服务器地址选项，填入在前面部署的服务器远程地址
-
-将硬件设置生成的.json密钥文件在“物品管理”对话框“解析json密钥文件”导入即可
-在"数据选择"对话框选择物品数据和时间段进行查询
-
-如果没有获取到位置数据，带着diy的NinjiaTag到人流密集的地方走一圈，等待后台服务器获取到位置数据库并存入数据库。
-
   若要在公网使用，需将本地部署服务公开到公网，可以用 路由器端口映射 或 内网穿透(比如有公网IP可使用端口映射+DDNS，或使用反向代理 [ngrok](https://ngrok.com/) 、[节点小宝](https://iepose.com/)、[ZeroNews](https://www.zeronews.cc/) 都有免费版；[花生壳](https://console.hsk.oray.com/) 9块9永久用，每月免费1G流量) 
 或使用Zerotier tailscale之类的的方式实现。具体操作不属于本文范畴，请自行搜索。
 
@@ -197,6 +190,14 @@ npm i
 前端页面可以自行部署，也可以使用我提供的页面[https://bd8cca.atomgit.net/NinjiaTagPage/](https://bd8cca.atomgit.net/NinjiaTagPage/)，页面只是一个查询框架，建议使用我提供的页面。
 前端基于vue3框架开发，存在少量bug，但整体能用，欢迎提出Issue或Pr，所有打包的前端页面位于[https://atomgit.com/bd8cca/NinjiaTagPage](https://atomgit.com/bd8cca/NinjiaTagPage) 项目，可自行下载部署
 
+### 使用方法
+
+在前端页面有配置服务器地址选项，填入在前面部署的服务器远程地址
+
+将硬件设置生成的.json密钥文件在“物品管理”对话框“解析json密钥文件”导入即可
+在"数据选择"对话框选择物品数据和时间段进行查询
+
+如果没有获取到位置数据，带着diy的NinjiaTag到人流密集的地方走一圈，等待后台服务器获取到位置数据库并存入数据库。
 
 
 ## 基于的开源项目
