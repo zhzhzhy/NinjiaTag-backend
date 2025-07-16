@@ -14,7 +14,7 @@ convert to tracks(KML/GPX etc.)
 
 ![UI](asset/UI1.png)
 
-![UI](asset/UI2.png)
+![UI](asset/UI2.jpg)
 
 ## 硬件DIY
 硬件DIY需要一定门槛，如果你不想自己动手，可以咸鱼搜索 “自制Airtag”（用户名 Dijkstra很贪心 ），我会不定时上架一些成品，但建议你自己搭建服务，我提供的服务器带宽有限。
