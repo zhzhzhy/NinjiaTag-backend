@@ -100,7 +100,7 @@ pip3 install aiohttp requests cryptography pycryptodome srp pbkdf2 -i https://py
 ```
 #### 创建python3 venv虚拟环境(可选)
 
-如果成功通过[pip3](#### 基础网络和加密组件)安装完成依赖，该步骤可忽略
+如果成功通过[pip3](#基础网络和加密组件)安装完成依赖，该步骤可忽略
 
 ```python3 -m venv ./venv/```
 
