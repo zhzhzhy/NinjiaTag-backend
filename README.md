@@ -119,36 +119,73 @@ npm i
 安装node_modules相关依赖
 
 ### 安装pm2 守护定时执行
+长期运行 "server.mjs" 和 "request_reports.mjs" 以保证服务器能定期取回位置数据并存于数据库
+
+#### PM2 安装说明
+
+1. 通过 npm 全局安装
+
+``npm install pm2 -g```
+
+- 验证安装：执行 
+"pm2 --version"，输出版本号即安装成功。
+- 权限问题（Linux/Mac）：若提示权限不足，可添加 
+"sudo" 或执行 
+```chmod 777 /usr/local/bin/pm2```授权。
+
+#### PM2 长期运行脚本命令
+
+##### 启动脚本并命名进程
+
+- 运行 
+"server.mjs"（数据库查询主服务）：
+```pm2 start server.mjs --name "query-server" --watch```
+
+   - 
+"--name"：自定义进程名称（便于管理）。
+   - 
+"--watch"：监听文件改动自动重启。
+- 运行 
+"request_reports.mjs"（抓取位置数据任务）：
+```pm2 start request_reports.mjs --name "report-task" --watch```
+
+##### 长期运行保障措施
+
+1. 保存进程列表
+```pm2 save```
+保存当前运行列表，防止重启后丢失。
+2. 设置系统开机自启
+```pm2 startup```  # 生成启动脚本
+```sudo pm2 startup systemd  # Linux systemd 系统```
+```pm2 save  # 关联保存的进程列表```
+服务器重启后 PM2 自动恢复进程。
+3. 日志管理
+   - 查看实时日志：
+```pm2 logs web-server  # 指定进程名```
+
+##### pm2常用管理命令(部署时可忽略)
+- 查看进程状态 
+"pm2 list" 显示所有进程及资源占用
+- 停止进程 
+"pm2 stop web-server" 停止指定进程（保留配置）
+- 重启进程 
+"pm2 restart web-server" 零停机重载（适用服务更新）
+- 监控资源 
+"pm2 monit" 实时显示 CPU/内存
+- 删除进程 
+"pm2 delete web-server" 彻底移除进程
+
 
 # 基于的开源项目
-查找部分的工作，主要基于openhaystack开源项目修改后实现，感谢https://github.com/seemoo-lab/openhaystack/项目的所做工作
-Query Apple's Find My network, based on all the hard work of https://github.com/seemoo-lab/openhaystack/ and @hatomist and @JJTech0130 and @Dadoum.
-并且感谢JJTech0130降低部署门槛，目前服务端部署不再需要mac设备了
+- 查找部分的工作，主要基于openhaystack开源项目修改后实现，感谢https://github.com/seemoo-lab/openhaystack/项目的所做工作
+
+- Query Apple's Find My network, based on all the hard work of https://github.com/seemoo-lab/openhaystack/ and @hatomist and @JJTech0130 and @Dadoum
+
+- 并且感谢JJTech0130降低部署门槛，目前服务端部署不再需要mac设备了
  https://github.com/JJTech0130/pypush.
 
 
-
- 
-
-## Run
-1. `cd` into the `FindMy` directory and generate keys using `./generate_keys.py`.
-2. Deploy your advertisement keys on devices supported by OpenHaystack. The ESP32 firmware is a mirror of the OpenHaystack binary, the Lenze 17H66 is found in many 1$ tags obtained from Ali.
-An nRF51 firmware can be found here: https://github.com/dakhnod/FakeTag
-3. run
-```bash
-../anisette-v3-server/anisette-v3-server & ./request_reports.py ; killall anisette-v3-server
-```
-in the same directory as your `.keys` files.
-
-Alternatively to step 3 you could install `https://github.com/Dadoum/pyprovision` (first install `anisette-v3-server` though to get a nice D environment and the required android libs),
-make a folder `anisette` in your working directory and just run
-```bash
-./request_reports.py
-```
-The script should pick up the python bindings to provision and use that instead.
-
-This command will print json like texts include *timestamp*,*isodatetime*,*latitude*,*longitude* etc.
-## convert the data to KML
+## 杂项待开发 convert the data to KML
 
 *KML stands for Keyhole Markup Language. It's a file format used to display geographic data in an Earth browser, such as Google Earth, Google Maps, and various other mapping applications.*
 
@@ -166,5 +203,4 @@ python3 make_kml.py
 ```
 this script reads input.txt generated with request_reports.py and writes for each key a *.kml file
 
-This current non-Mac workflow is not optimal yet, mainly because the anisette server is a bit of a workaround. A python solution for retrieving this is being
-developed in the pypush discord, please join there if you want to contribute!
+
