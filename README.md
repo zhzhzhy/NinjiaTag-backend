@@ -98,9 +98,20 @@ Registry Mirrors:
  ```
 pip3 install aiohttp requests cryptography pycryptodome srp pbkdf2 -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
+#### 创建python3 venv虚拟环境(可选)
+
+如果成功通过[pip3](#### 基础网络和加密组件)安装完成依赖，该步骤可忽略
+
+```python3 -m venv ./venv/```
+
+##### venv虚拟环境pip3安装相关依赖
+
+```./venv/bin/pip3 install aiohttp requests cryptography pycryptodome srp pbkdf2 -i https://pypi.tuna.tsinghua.edu.cn/simple```
 
 在python3 venv环境执行
-```python3 request_reports.py```
+```./venv/bin/python3 request_reports.py```
+
+或执行```python3 request_reports.py```
 
 开始时会提示输入Apple ID和密码，然后是2FA短信验证，完成后能正常执行位置数据拉取。
 ### 安装nodejs
