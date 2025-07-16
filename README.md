@@ -76,6 +76,35 @@ Registry Mirrors:
   https://hub.1panel.dev/
   https://docker.itelyou.cf/
   ......
+  
+ ###  3. 下载本项目到本地
+ 使用git clone 或下载zip解压
+ ### 4.安装python3相关库
+安装 python3，在python3 venv环境执行python3 request_reports.py
+
+开始时会提示输入Apple ID和密码，然后是2FA短信验证，完成后能正常执行位置数据拉取。
+# 安装nodejs
+执行以下命令安装nodejs和npm用于提供后端服务
+```
+# Download and install nvm:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+# in lieu of restarting the shell
+\. "$HOME/.nvm/nvm.sh"
+# Download and install Node.js:
+nvm install 22
+# Verify the Node.js version:
+node -v # Should print "v22.17.1".
+nvm current # Should print "v22.17.1".
+# Verify npm version:
+npm -v # Should print "10.9.2".
+```
+
+完成后在项目目录下执行：
+```
+npm i
+```
+安装node_modules相关依赖
+
 # 基于的开源项目
 查找部分的工作，主要基于openhaystack开源项目修改后实现，感谢https://github.com/seemoo-lab/openhaystack/项目的所做工作
 Query Apple's Find My network, based on all the hard work of https://github.com/seemoo-lab/openhaystack/ and @hatomist and @JJTech0130 and @Dadoum.
