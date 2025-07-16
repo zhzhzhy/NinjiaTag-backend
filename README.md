@@ -14,8 +14,6 @@ convert to tracks(KML/GPX etc.)
 
 ![UI](asset/UI1.png)
 
-![UI](asset/UI2.png)
-
 ## 目录
 - [NinjiaTag](#ninjiatag)
   - [DIY你自己的airtag](#diy你自己的airtag)
