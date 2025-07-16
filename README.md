@@ -240,6 +240,12 @@ npm i
 前端页面可以自行部署，也可以使用我提供的页面[https://bd8cca.atomgit.net/NinjiaTagPage/](https://bd8cca.atomgit.net/NinjiaTagPage/)，页面只是一个查询框架，建议使用我提供的页面。
 前端基于vue3框架开发，目前存在少量bug，但整体能用，欢迎提出Issue或Pr，所有打包的前端页面位于[https://atomgit.com/bd8cca/NinjiaTagPage](https://atomgit.com/bd8cca/NinjiaTagPage) 项目，可自行下载部署
 
+[NinjiaTagPage(http)](http://bd8cca.atomgit.net/NinjiaTagPage/)
+[NinjiaTagPage(https)](https://bd8cca.atomgit.net/NinjiaTagPage/)
+
+1. 因浏览器限制，https 的网站只能访问 https 的后台服务。所以如果你选择使用 [Atomgit Page(https)](https://lovelyelfpop.atomgit.net/macless_haystack_pages/)，那么必须将 后端node 服务部署为 https（需 SSL 证书）。可以反向代理工具，推荐使用[Cloudflare tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)将本地NAS或Linux服务器端口映射到子域名下。
+2. 访问 http 的地址，浏览器可能会自作主张转向 https 的地址，可以地址栏改成 http 再回车
+
 ### 使用方法
 
 NinjiaTag前端页面，使用Vue3编写，结合Mapbox-gl三维引擎强大的渲染能力，后续可扩展更多的功能（如轨迹导出KML，多物品时空交错）。
