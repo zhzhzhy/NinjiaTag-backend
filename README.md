@@ -203,17 +203,27 @@ npm i
 ## 前端页面
 
 前端页面可以自行部署，也可以使用我提供的页面[https://bd8cca.atomgit.net/NinjiaTagPage/](https://bd8cca.atomgit.net/NinjiaTagPage/)，页面只是一个查询框架，建议使用我提供的页面。
-前端基于vue3框架开发，存在少量bug，但整体能用，欢迎提出Issue或Pr，所有打包的前端页面位于[https://atomgit.com/bd8cca/NinjiaTagPage](https://atomgit.com/bd8cca/NinjiaTagPage) 项目，可自行下载部署
+前端基于vue3框架开发，目前存在少量bug，但整体能用，欢迎提出Issue或Pr，所有打包的前端页面位于[https://atomgit.com/bd8cca/NinjiaTagPage](https://atomgit.com/bd8cca/NinjiaTagPage) 项目，可自行下载部署
 
 ### 使用方法
 
-在前端页面有配置服务器地址选项，填入在前面部署的服务器远程地址
+NinjiaTag前端页面，使用Vue3编写，结合Mapbox-gl三维引擎强大的渲染能力，后续可扩展更多的功能（如轨迹导出KML，多物品时空交错）。
 
-将硬件设置生成的.json密钥文件在“物品管理”对话框“解析json密钥文件”导入即可
-在"数据选择"对话框选择物品数据和时间段进行查询
+#### 简单使用说明
+
+1.  在前端页面有配置服务器地址选项，填入部署的[https://github.com/zhzhzhy/NinjiaTag-backend](https://github.com/zhzhzhy/NinjiaTag-backend)服务器远程地址
+
+2.  将generate_keys.py硬件设置生成的.json密钥文件在```物品管理```对话框```解析json密钥文件```导入即可
+
+3.  在```数据选择```对话框选择物品数据和时间段进行查询，有几个选项：
+  
+- 轨迹点：历史的轨迹，鼠标悬停或点击可显示详情。
+
+- 热图： 类似地理信息系统的人流密度显示，经常去过的地方颜色更深，不去或偶尔去的地方颜色浅。
+  
+- 最新位置： 最新的物品位置，以图标的形式显示。
 
 如果没有获取到位置数据，带着diy的NinjiaTag到人流密集的地方走一圈，等待后台服务器获取到位置数据库并存入数据库。
-
 
 ## 基于的开源项目
 - 查找部分的工作，主要基于openhaystack开源项目修改后实现，感谢https://github.com/seemoo-lab/openhaystack/项目的所做工作
