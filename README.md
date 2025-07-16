@@ -76,7 +76,7 @@ Registry Mirrors:
   https://hub.1panel.dev/
   https://docker.itelyou.cf/
   ......
-  
+  ```
  ###  3. 下载本项目到本地
  使用git clone 或下载zip解压
  ### 4.安装python3相关库
