@@ -51,6 +51,11 @@ convert to tracks(KML/GPX etc.)
 ## 硬件DIY
 硬件DIY需要一定门槛，如果你不想自己动手，可以咸鱼搜索 “自制Airtag”（用户名 Dijkstra很贪心 ），我会不定时上架一些成品，但建议你自己搭建服务，我提供的服务器带宽有限。
 
+成品使用教程：
+
+- [2032圆形Tag使用教程](./usr_guide/2032_TAG.md)
+- [MiniTag使用教程](./usr_guide/Mini_TAG.md)
+
 ## 准备条件：
 - 一台Linux 服务器（任意Linux）。用来运行 Docker 服务和 Python 脚本。
 - 需要一个使用实体IOS设备注册的，已启用 2FA (双重认证)的 Apple-ID。
