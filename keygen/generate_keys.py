@@ -13,6 +13,7 @@ import struct
 import json
 import base64
 import binascii
+import uuid
 
 OUTPUT_FOLDER = 'output/'
 
@@ -102,8 +103,8 @@ prefix = ''
 
 def random_prefix():
     if args.prefix is None:
-        prefix = ''.join(random.choice(string.ascii_uppercase +
-                                       string.digits) for _ in range(6))
+        # 使用UUID生成8位十六进制大写字符串作为前缀
+        prefix = uuid.uuid4().hex.upper()
     else:
         prefix = args.prefix
     return prefix
