@@ -14,6 +14,7 @@ import json
 import base64
 import binascii
 import uuid
+from filelock import FileLock  # pip install filelock
 
 OUTPUT_FOLDER = 'output/'
 
@@ -107,27 +108,30 @@ def random_prefix():
         prefix = uuid.uuid4().hex.upper()
     else:
         prefix = args.prefix
+    print(f"Using prefix: {prefix}")
     return prefix
 
 
 def generate_mkeys():
+    lock_path = os.path.join(current_directory, 'keyMap.lock')
+    file_lock = FileLock(lock_path, timeout=10)  # 10秒超时
     while True:
         prefix = random_prefix()
         PREFIX_FOLDER = prefix+'/'
         if not os.path.exists(PREFIX_FOLDER):
             break
+    with file_lock:
+        # 创建keyMap.json文件路径（在当前目录）
+        keyMap_path = os.path.join(current_directory, 'keyMap.json')
 
-     # 创建keyMap.json文件路径（在当前目录）
-    keyMap_path = os.path.join(current_directory, 'keyMap.json')
+        # 如果keyMap.json文件不存在，则创建并写入空列表
+        if not os.path.exists(keyMap_path):
+            with open(keyMap_path, 'w') as km:
+                json.dump([], km)
 
-    # 如果keyMap.json文件不存在，则创建并写入空列表
-    if not os.path.exists(keyMap_path):
-        with open(keyMap_path, 'w') as km:
-            json.dump([], km)
-
-    # 读取现有keyMap数据
-    with open(keyMap_path, 'r') as km:
-        keyMap_data = json.load(km)
+        # 读取现有keyMap数据
+        with open(keyMap_path, 'r') as km:
+            keyMap_data = json.load(km)
 
     if args.yaml:
         yaml = open(PREFIX_FOLDER + prefix + '_' + args.yaml + '.yaml', 'w')
@@ -161,7 +165,6 @@ def generate_mkeys():
 
         while i < args.nkeys:
             priv = random.getrandbits(224)
-            print("priv", priv)
             adv = ec.derive_private_key(priv, ec.SECP224R1(
             ), default_backend()).public_key().public_numbers().x
             if isV3:
@@ -174,7 +177,12 @@ def generate_mkeys():
             priv_b64 = base64.b64encode(priv_bytes).decode("ascii")
             adv_b64 = base64.b64encode(adv_bytes).decode("ascii")
             s256_b64 = base64.b64encode(sha256(adv_bytes)).decode("ascii")
-
+            if '/' in s256_b64[:7]:
+                print(
+                    'Key skipped and regenerated, because there was a / in the b64 of the hashed pubkey :(')
+                continue
+            else:
+                i += 1
             MAC_ADDRESS = base64_to_modified_hex(adv_b64)
 
             # 创建当前密钥的信息字典
@@ -189,15 +197,10 @@ def generate_mkeys():
             # 添加到keyMap_data
             keyMap_data.append(key_info)
 
-            # 写入更新后的keyMap_data到keyMap.json
-            with open(keyMap_path, 'w') as km:
-                json.dump(keyMap_data, km, indent=2)
-            if '/' in s256_b64[:7]:
-                print(
-                    'Key skipped and regenerated, because there was a / in the b64 of the hashed pubkey :(')
-                continue
-            else:
-                i += 1
+            with file_lock:
+                # 写入更新后的keyMap_data到keyMap.json
+                with open(keyMap_path, 'w') as km:
+                    json.dump(keyMap_data, km, indent=2)
 
             keyfile.write(base64.b64decode(adv_b64))
 
@@ -357,8 +360,7 @@ def base64_to_modified_hex(base64_str):
 if MODE == "generate":
     for i in range(args.nitems):
         print(f"Generating item {i+1}/{args.nitems} with {args.nkeys} keys...")
-        prefix = random_prefix()
-        print(f"Using prefix: {prefix}")
+
         if args.yaml:
             args.prefix = prefix
         else:

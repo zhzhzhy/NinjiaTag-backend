@@ -73,7 +73,7 @@ Only a free Apple ID is required, with SMS 2FA properly setup. If you don't have
    - nRF5x 前往 [openhaystack-firmware](https://github.com/acalatrava/openhaystack-firmware/releases) 下载所需固件(nrf51_firmware.bin或nrf52_firmware.bin) 
    - [TLSR825X 芯片](https://github.com/biemster/FindMy/blob/main/Telink_TLSR825X/README.md)，比如米家温湿度计2(型号 LYWSD03MMC)也可以刷机成定位标签，但我没有尝试
 
-2. 执行本仓库的keygen目录下 `python3 generate_keys.py` 来生成密钥对(在当前目录6位随机名称目录下)。(注意: 必须安装依赖 `cryptography`. 用 `pip3 install cryptography` 命令安装)
+2. 执行本仓库的keygen目录下 `python3 generate_keys.py` 来生成密钥对(在当前目录6位随机名称目录下)。(注意: 必须安装依赖 `cryptography` `filelock`. 用 `pip3 install cryptography filelock` 命令安装)
    Windows 或 Linux 下都可以执行。
    
 
