@@ -124,8 +124,8 @@ async def main_async(args, privkeys, names):
     unixEpoch = int(datetime.datetime.now().timestamp())
     startdate = unixEpoch - (60 * 60 * args.hours)
 
-    # 设置信号量（并发数=4）
-    semaphore = asyncio.Semaphore(1000)
+    # 设置信号量（并发数=100）
+    semaphore = asyncio.Semaphore(100)
     ordered = []
     found = set()
 
