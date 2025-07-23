@@ -247,7 +247,10 @@ if __name__ == "__main__":
     # Read key files and store keys in dictionaries/database
     privkeys = {}
     names = {}
-    for keyfile in glob.glob(os.path.dirname(os.path.realpath(__file__)) + '/keys/' + args.prefix + '*.keys'):
+    # 递归 glob.glob 调用取出目录下所有keys
+    keyfiles_pattern = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'keys', '**', args.prefix + '*.keys')
+    keyfiles = glob.glob(keyfiles_pattern, recursive=True)
+    for keyfile in keyfiles:
         with open(keyfile) as f:
             name = os.path.basename(keyfile)[len(args.prefix):-5]
             current_priv = None
