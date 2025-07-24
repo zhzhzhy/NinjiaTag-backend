@@ -175,16 +175,14 @@ nvm current # Should print "v22.17.1".
 npm -v # Should print "10.9.2".
 ```
 
-如果网络有问题尝试使用`一键安装最新版nodejs`
-
-```
-source <(curl -L https://nodejs-install.netlify.app/install.sh)
-```
+如果网络有问题可尝试在nodejs官网下载安装包进行手动安装，不在本教程范围内，可自行搜索安装教程
 
 完成后在项目目录下执行：
+
 ```
 npm i
 ```
+
 安装node_modules相关依赖
 
 ### 安装pm2 守护定时执行
