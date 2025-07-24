@@ -85,6 +85,7 @@ Only a free Apple ID is required, with SMS 2FA properly setup. If you don't have
    经过测试，带密钥轮换机制的标签，其位置会被更频繁的上报，即位置更新更频繁，更能被精确定位。推荐使用多密钥的 keyfile。但是，密钥轮换会增加一定功耗。
 
    [nrf5x烧录教程](flash_guide/nrf5x.md)
+   [ST17H66烧录教程](flash_guide/ST17H66.md)
 ## 服务端安装部署
 ### 1. 创建一个 docker 网络
 
