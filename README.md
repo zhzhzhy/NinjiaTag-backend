@@ -174,6 +174,12 @@ nvm current # Should print "v22.17.1".
 npm -v # Should print "10.9.2".
 ```
 
+如果网络有问题尝试使用`一键安装最新版nodejs`
+
+```
+source <(curl -L https://nodejs-install.netlify.app/install.sh)
+```
+
 完成后在项目目录下执行：
 ```
 npm i
