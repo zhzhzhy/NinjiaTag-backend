@@ -16,35 +16,34 @@ Current features:
 ![UI](asset/UI1.png)
 
 ## Table of Contents
-- #ninjiatag
-  - #diy-your-own-airtag
-  - #table-of-contents
-  - #hardware-diy
-  - #prerequisites
-  - #hardware-setup
-  - #server-side-installation--deployment
-    - #1-create-a-docker-network
-    - #2-run-anisette-server
-    - #3-download-this-project-locally
-    - #4-place-server-keys
-    - #5-install-python3-libraries
-      - #core-networking--encryption-components
-      - #create-a-python3-venv-virtual-environment-optional
-        - #install-dependencies-in-venv
-    - #install-nodejs
-    - #install-pm2-for-daemonized-execution
-      - #pm2-installation-notes
-      - #pm2-long-running-script-commands
-        - #start-scripts--name-processes
-        - #long-run-safeguards
-        - #common-pm2-commands-ignore-during-deployment
-    - #6-server-backend-address-remote
-  - #frontend-page
-    - #usage
-      - #basic-usage-guide
-  - #based-on-open-source-projects
-  - #miscellaneous-under-development-convert-data-to-kml
-  - #disclaimer
+- [NinjiaTag](#ninjiatag)
+  - [DIY Your Own Airtag](#diy-your-own-airtag)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Hardware Setup](#hardware-setup)
+  - [Server-Side Installation \& Deployment](#server-side-installation--deployment)
+    - [1. Create a Docker Network](#1-create-a-docker-network)
+    - [2. Run https://github.com/Dadoum/anisette-v3-server](#2-run-httpsgithubcomdadoumanisette-v3-server)
+    - [3. Download This Project Locally](#3-download-this-project-locally)
+    - [4. Place Server Keys](#4-place-server-keys)
+    - [5. Install Python3 Libraries](#5-install-python3-libraries)
+      - [Core Networking \& Encryption Components](#core-networking--encryption-components)
+      - [Create Python3 venv (Optional)](#create-python3-venv-optional)
+        - [Install Dependencies in venv](#install-dependencies-in-venv)
+    - [Install Node.js](#install-nodejs)
+    - [Install PM2 for Daemonized Execution](#install-pm2-for-daemonized-execution)
+      - [PM2 Installation Notes](#pm2-installation-notes)
+      - [PM2 Long-Running Script Commands](#pm2-long-running-script-commands)
+        - [Start Scripts \& Name Processes](#start-scripts--name-processes)
+        - [Long-Run Safeguards](#long-run-safeguards)
+        - [Common PM2 Commands (Ignore During Deployment)](#common-pm2-commands-ignore-during-deployment)
+    - [6. Server Backend Address (Remote)](#6-server-backend-address-remote)
+  - [Frontend Page](#frontend-page)
+    - [Usage](#usage)
+      - [Basic Usage Guide](#basic-usage-guide)
+  - [Based on Open-Source Projects](#based-on-open-source-projects)
+  - [Miscellaneous (Under Development): Convert Data to KML](#miscellaneous-under-development-convert-data-to-kml)
+  - [Disclaimer](#disclaimer)
 
 
 
