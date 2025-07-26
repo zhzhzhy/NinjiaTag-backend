@@ -1,5 +1,6 @@
 # NinjiaTag
 ## DIY你自己的airtag
+### DIY your own airtag(longterm record)
 DIY 兼容 FindMy 网络的定位标签/设备（长期记录）
 > “NinjiaTag”并非拼写错误，而是我们对物联网产品价值的重新定义：它不仅是敏捷的防丢工具（Ninja），更是对下一代分布式物联网（IOT）技术的憧憬，为分布式蓝牙标签（Tag）的新一代解决方案。名称中的 ‘jia’ 也寓意 ‘协作之家’，期待与你共同构建！
 
@@ -14,11 +15,15 @@ DIY 兼容 FindMy 网络的定位标签/设备（长期记录）
 - [ ] 待测试 Query Apple's Find My network,write into sqlite database,
 convert to tracks(KML/GPX etc.)
 
+### [Enlish Readme](README-EN.md)
+
 ![UI](asset/UI1.png)
 
 ## 目录
 - [NinjiaTag](#ninjiatag)
   - [DIY你自己的airtag](#diy你自己的airtag)
+    - [DIY your own airtag(longterm record)](#diy-your-own-airtaglongterm-record)
+    - [Enlish Readme](#enlish-readme)
   - [目录](#目录)
   - [硬件DIY](#硬件diy)
   - [准备条件：](#准备条件)
