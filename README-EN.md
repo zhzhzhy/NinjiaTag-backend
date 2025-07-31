@@ -102,7 +102,7 @@ Verify with `docker info` (look for `Registry Mirrors`).
 Use `git clone` or download the ZIP.
 
 ### 4. Place Server Keys
-Place the `.key` files generated in #hardware-setup into the project's `/key` folder. Scripts will auto-convert them.
+Place the `.key` files generated in #hardware-setup into the project's `/keys` folder. Scripts will auto-convert them.
 
 ### 5. Install Python3 Libraries
 #### Core Networking & Encryption Components

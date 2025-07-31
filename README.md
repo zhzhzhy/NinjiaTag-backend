@@ -38,6 +38,7 @@ convert to tracks(KML/GPX etc.)
       - [创建python3 venv虚拟环境(可选)](#创建python3-venv虚拟环境可选)
         - [venv虚拟环境pip3安装相关依赖](#venv虚拟环境pip3安装相关依赖)
     - [安装nodejs](#安装nodejs)
+      - [修改request\_reports.mjs](#修改request_reportsmjs)
     - [安装pm2 守护定时执行](#安装pm2-守护定时执行)
       - [PM2 安装说明](#pm2-安装说明)
       - [PM2 长期运行脚本命令](#pm2-长期运行脚本命令)
@@ -137,7 +138,7 @@ Registry Mirrors:
  
 ### 4.放置服务端key
 
-将硬件设置步骤中生成的.key后缀的文件放置在本项目/key文件夹下，后续脚本会自动转化
+将硬件设置步骤中生成的.key后缀的文件放置在本项目/keys文件夹下，后续脚本会自动转化
  
  ### 5.安装python3相关库
  
@@ -190,6 +191,20 @@ npm i
 ```
 
 安装node_modules相关依赖
+
+#### 修改request_reports.mjs
+如果在python venv 执行，将```request_reports.mjs```文件中
+
+```
+python3 request_reports.py
+```
+修改为
+```
+./venv/bin/python3 request_reports.py
+```
+可以通过修改```*/5 * * * *```来修改从Findmy服务器获取位置数据的时间间隔，具体参考Cron的文档，如```*/5 * * * *```表示每5分钟请求一次，不建议修改得太频繁
+
+
 
 ### 安装pm2 守护定时执行
 长期运行 "server.mjs" 和 "request_reports.mjs" 以保证服务器能定期取回位置数据并存于数据库
