@@ -1,231 +1,195 @@
-# NinjiaTag
-## DIY Your Own Airtag
-DIY a FindMy network-compatible tracking tag/device (long-term recording)
-> "NinjiaTag" is not a typo—it represents our redefinition of IoT product value: not just an agile anti-loss tool (Ninja), but also a vision for next-gen distributed IoT technology, pioneering a new solution for distributed Bluetooth tags (Tag). The 'jia' in the name signifies 'collaborative home,' inviting you to co-build this future!
+# NinjiaTag  
 
-The server-side runs the FindMy network backend to capture location data and store it in a database. **No Mac/VM or iPhone with the Find My app is needed** to view historical locations of your DIY tags/devices across any timeframe (borrowing an iPhone for Apple ID registration is temporarily required).
-Current features:
-- [x] Server-side background execution of `request_report` to fetch and store location data indefinitely in a local server database (unlike mainstream products limited to 7 days). Trajectories are permanently saved.
-- [x] Query and display trajectories for any item/timeframe. Supports latitude/longitude and timestamp display with zoom functionality for easy review.
-- [x] Heatmap display (Hotspot), similar to GIS population density visualization—frequently visited areas appear darker.
-- [x] Web frontend supports key management.
-- [x] Uses open-source Mapbox-GL 3D engine for terrain rendering and aesthetics.
+## DIY Your Own AirTag  
 
-- [ ] *Pending testing*: Query Apple's Find My network, write to SQLite database, convert to tracks (KML/GPX, etc.).
+### DIY Your Own AirTag (Long-Term Record)  
+DIY Find My Network-Compatible Tracking Tags/Devices (Long-Term Record)  
 
-![UI](asset/UI1.png)
+> "NinjiaTag" is not a misspelling but our redefinition of IoT product value: It serves not only as an agile anti-loss tool (Ninja) but also embodies our vision for next-gen distributed IoT technology—a new solution for decentralized Bluetooth tags (Tag). The 'jia' in the name signifies 'collaborative home,' inviting you to co-build this ecosystem!  
 
-## Table of Contents
-- [NinjiaTag](#ninjiatag)
-  - [DIY Your Own Airtag](#diy-your-own-airtag)
-  - [Table of Contents](#table-of-contents)
-  - [Prerequisites](#prerequisites)
-  - [Hardware Setup](#hardware-setup)
-  - [Server-Side Installation \& Deployment](#server-side-installation--deployment)
-    - [1. Create a Docker Network](#1-create-a-docker-network)
-    - [2. Run https://github.com/Dadoum/anisette-v3-server](#2-run-httpsgithubcomdadoumanisette-v3-server)
-    - [3. Download This Project Locally](#3-download-this-project-locally)
-    - [4. Place Server Keys](#4-place-server-keys)
-    - [5. Install Python3 Libraries](#5-install-python3-libraries)
-      - [Core Networking \& Encryption Components](#core-networking--encryption-components)
-      - [Create Python3 venv (Optional)](#create-python3-venv-optional)
-        - [Install Dependencies in venv](#install-dependencies-in-venv)
-    - [Install Node.js](#install-nodejs)
-    - [Install PM2 for Daemonized Execution](#install-pm2-for-daemonized-execution)
-      - [PM2 Installation Notes](#pm2-installation-notes)
-      - [PM2 Long-Running Script Commands](#pm2-long-running-script-commands)
-        - [Start Scripts \& Name Processes](#start-scripts--name-processes)
-        - [Long-Run Safeguards](#long-run-safeguards)
-        - [Common PM2 Commands (Ignore During Deployment)](#common-pm2-commands-ignore-during-deployment)
-    - [6. Server Backend Address (Remote)](#6-server-backend-address-remote)
-  - [Frontend Page](#frontend-page)
-    - [Usage](#usage)
-      - [Basic Usage Guide](#basic-usage-guide)
-  - [Based on Open-Source Projects](#based-on-open-source-projects)
-  - [Miscellaneous (Under Development): Convert Data to KML](#miscellaneous-under-development-convert-data-to-kml)
-  - [Disclaimer](#disclaimer)
+**Server-side operation**: The Find My network backend fetches location data and stores it in a database. **No need** to deploy a Mac/VM or use an iPhone with the Find My app to view historical locations. (Note: An iPhone is temporarily required during Apple ID registration.)  
 
+### Current Features:  
+- [x] Server backend runs `request_report` to fetch locations, periodically downloads data to local database (unlimited storage duration vs. 7-day limit in mainstream products).  
+- [x] Query and display item trajectories for any timeframe with GPS coordinates and timestamps; supports zoomable maps.  
+- [x] Heatmap (Hotspot) visualization showing location frequency (darker = more visits).  
+- [x] Web frontend for key management.  
+- [x] Uses open-source Mapbox-GL 3D engine with terrain rendering.  
 
+- [ ] *Pending tests*: Query Apple’s Find My network, write to SQLite database, convert to tracks (KML/GPX).  
 
+### README-EN.md  
+!asset/UI1.png  
 
-## Prerequisites
-- A **Linux server** (any distro) to run Docker and Python scripts.
-- An **Apple ID** with **2FA (SMS only)** enabled, registered using a physical iOS device (iPad/iPhone/Mac).
-  - *Recommendation:* Create a *new* Apple ID for testing. Log out of this ID on any Apple devices to ensure SMS codes work.
-  - The account *must* have been logged into on an Apple device (to activate iCloud's free 5GB space). Web-only registrations lack permissions.
-- A **Bluetooth tag device**: Currently supports nRF5x & ST17H66 modules. Support for more low-cost domestic modules is planned.
-  - Minimal system modules suffice. You can also design PCBs using nRF5x/ST17H66 chips.
+## Table of Contents  
+1. #hardware-diy  
+2. #prerequisites  
+3. #hardware-setup  
+4. #server-installation-deployment  
+5. #frontend-interface  
+6. #based-on-open-source-projects  
+7. #disclaimer  
 
-## Hardware Setup
-1.  **Download Firmware & Flashing Scripts**
-    - **ST17H66 Chips**: Visit https://github.com/biemster/FindMy/tree/main/Lenze_ST17H66 for firmware (`FindMy.hex`) and script (`flash_st17h66.py`).
-    - **nRF5x Chips**: Visit https://github.com/acalatrava/openhaystack-firmware/releases for firmware (`nrf51_firmware.bin` or `nrf52_firmware.bin`).
-    - *Experimental:* https://github.com/biemster/FindMy/blob/main/Telink_TLSR825X/README.md (e.g., Xiaomi Temp/Humidity Sensor 2 - Model LYWSD03MMC).
+---
 
-2.  **Generate Key Pairs**: Run `python3 generate_keys.py` in this repo's `keygen` directory (outputs to a random 6-character folder).  
-    *Dependencies:* Install `cryptography` & `filelock` via `pip3 install cryptography filelock`. Works on Windows/Linux.  
-    - **Multi-Key Support**: Run `python3 generate_keys.py -n 50 -i 8` to generate 8 items with 50 rolling keys each. Rolling keys (like AirTag) improve location update frequency and accuracy but increase power consumption slightly.
+## Hardware DIY  
+Hardware DIY requires technical skill. 
 
-3.  **Flash Firmware to Device**
-    - flash_guide/nrf5x.md
-    - flash_guide/ST17H66.md
+**Pre-built Guides**:  
+- ./usr_guide/2032_TAG.md  
+- ./usr_guide/Mini_TAG.md  
 
-## Server-Side Installation & Deployment
-### 1. Create a Docker Network
-```bash
-docker network create mh-network
-```
+## Prerequisites  
+- **Linux Server**: For Docker and Python scripts.  
+- **Apple ID**:  
+  - Must be registered on a physical iOS device with SMS-based 2FA enabled.  
+  - Use a dedicated ID (not your primary Apple ID).  
+  - *Critical*: The ID must have accessed iCloud storage (free 5GB) via an Apple device. Web-only registrations lack permissions.  
 
-### 2. Run https://github.com/Dadoum/anisette-v3-server
-```bash
-docker run -d --restart always --name anisette -p 6969:6969 --volume anisette-v3_data:/home/Alcoholic/.config/anisette-v3/ --network mh-network dadoum/anisette-v3-server
-```
-**Note for China Users**: Configure Docker registry mirrors by editing `/etc/docker/daemon.json` (create if missing):
-```json
-{
-  "registry-mirrors": [
-      "https://docker.1ms.run",
-      "https://hub.1panel.dev",
-      "https://docker.itelyou.cf",
-      "http://mirrors.ustc.edu.cn",
-      "http://mirror.azure.cn"
-  ]
-}
-```
-Restart Docker:
-```bash
-systemctl restart docker  # or `service docker restart`
-```
-Verify with `docker info` (look for `Registry Mirrors`).
+- **Bluetooth Tag Hardware**:  
+  - Supported: nRF5x modules, ST17H66 modules (low-cost options).  
+  - Custom PCBs using these chips are feasible.  
 
-### 3. Download This Project Locally
-Use `git clone` or download the ZIP.
+## Hardware Setup  
+1. **Download Firmware & Flashing Tools**:  
+   - ST17H66: Get `FindMy.hex` and `flash_st17h66.py` from https://github.com/biemster/FindMy/tree/main/Lenze_ST17H66.  
+   - nRF5x: Download `nrf51_firmware.bin`/`nrf52_firmware.bin` from https://github.com/acalatrava/openhaystack-firmware/releases.  
+   - *Experimental*: TLSR825X chips (e.g., Xiaomi Mijia Hygrometer 2) via https://github.com/biemster/FindMy/blob/main/Telink_TLSR825X/README.md.  
 
-### 4. Place Server Keys
-Place the `.key` files generated in #hardware-setup into the project's `/keys` folder. Scripts will auto-convert them.
+2. **Generate Keys**:  
+   Run in the `keygen` directory:  
+   ```bash 
+   pip3 install cryptography filelock  # Install dependencies first  
+   python3 generate_keys.py  
+   ```  
+   - Use `-n` to specify key count (e.g., `-n 50` for rolling keys).  
+   - *Rolling keys improve location update frequency but increase power usage*.  
 
-### 5. Install Python3 Libraries
-#### Core Networking & Encryption Components
-```bash
-pip3 install aiohttp requests cryptography pycryptodome srp pbkdf2 -i https://pypi.tuna.tsinghua.edu.cn/simple
-```
-#### Create Python3 venv (Optional)
-Skip if dependencies installed successfully above.
-```bash
-python3 -m venv ./venv/
-```
-##### Install Dependencies in venv
-```bash
-./venv/bin/pip3 install aiohttp requests cryptography pycryptodome srp pbkdf2 -i https://pypi.tuna.tsinghua.edu.cn/simple
-```
-**Run Script**:
-```bash
-./venv/bin/python3 request_reports.py  # or `python3 request_reports.py`
-```
-*First run prompts for Apple ID/Password + 2FA SMS.*
+3. **Flash Hardware**:  
+   - flash_guide/nrf5x.md  
+   - flash_guide/ST17H66.md  
 
-### Install Node.js
-```bash
-# Download and install nvm:
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-\. "$HOME/.nvm/nvm.sh" # Activate nvm without restarting shell
-# Download and install Node.js:
-nvm install 22
-# Verify:
-node -v  # Should output v22.17.1
-npm -v   # Should output 10.9.2
-```
-**Install Project Dependencies**:
-```bash
-npm i
-```
+---
 
-### Install PM2 for Daemonized Execution
-Run `server.mjs` (DB query service) and `request_reports.mjs` (location fetch task) persistently.
-#### PM2 Installation Notes
-1.  Install globally via npm:
-```bash
-npm install pm2 -g
-```
-Verify with `pm2 --version`.
+## Server Installation & Deployment  
 
-#### PM2 Long-Running Script Commands
-##### Start Scripts & Name Processes
-- Start DB Query Service:
-```bash
-pm2 start server.mjs --name "query-server" --watch
-```
-- Start Location Fetch Task:
-```bash
-pm2 start request_reports.mjs --name "report-task" --watch
-```
-##### Long-Run Safeguards
-1.  Save process list: `pm2 save`
-2.  Enable auto-start on boot:
-```bash
-pm2 startup         # Generate startup script
-sudo pm2 startup systemd  # For Linux systemd
-pm2 save            # Link saved process list
-```
-3.  Log Management: `pm2 logs query-server`
+### 1. Create a Docker Network  
+```bash  
+docker network create mh-network  
+```  
 
-##### Common PM2 Commands (Ignore During Deployment)
-- List processes: `pm2 list`
-- Stop process: `pm2 stop query-server`
-- Restart process: `pm2 restart query-server`
-- Monitor resources: `pm2 monit`
-- Delete process: `pm2 delete query-server`
+### 2. Run https://github.com/Dadoum/anisette-v3-server  
+```bash  
+docker run -d --restart always --name anisette -p 6969:6969 \  
+--volume anisette-v3_data:/home/Alcoholic/.config/anisette-v3/ \  
+--network mh-network dadoum/anisette-v3-server  
+```  
+**Troubleshooting**: If Docker image pull fails in China, configure mirrors in `/etc/docker/daemon.json`:  
+```json  
+{  
+  "registry-mirrors": [  
+    "https://docker.1ms.run",  
+    "https://hub.1panel.dev",  
+    "https://docker.itelyou.cf"  
+  ]  
+}  
+```  
+Restart Docker: `systemctl restart docker`.  
 
-### 6. Server Backend Address (Remote)
-Frontend accesses data via a URL like `http://server-ip:3000`.  
+### 3. Clone the Project  
+```bash  
+git clone https://github.com/your-repo/NinjiaTag.git  
+```  
 
-**For Public Access**: Expose your local service using:
-- Router port forwarding + DDNS (if you have a public IP).
-- **Reverse Proxy/Tunneling Tools**:
-    - https://ngrok.com/
-    - https://iepose.com/
-    - https://www.zeronews.cc/ (Free tiers available)
-    - https://console.hsk.oray.com/ (¥9.9 lifetime, 1GB free/month)
-- **VPN Mesh**: Zerotier / Tailscale.
-*(Detailed setup beyond this guide)*.
+### 4. Place Server Keys  
+Copy `.key` files from hardware setup into the project’s `/keys` folder.  
 
-## Frontend Page
-Use my hosted page or self-deploy:
-- **Hosted Pages**:  
-  http://bd8cca.atomgit.net/NinjiaTagPage/  
-  https://bd8cca.atomgit.net/NinjiaTagPage/  
-- **Self-Deploy Source**:  
-  https://atomgit.com/bd8cca/NinjiaTagPage  
+### 5. Install Python Libraries  
+```bash  
+pip3 install aiohttp requests cryptography pycryptodome srp pbkdf2 \  
+-i https://pypi.tuna.tsinghua.edu.cn/simple  
+```  
+**Optional**: Use a virtual environment:  
+```bash  
+python3 -m venv ./venv/  
+./venv/bin/pip3 install aiohttp requests cryptography pycryptodome srp pbkdf2 \  
+-i https://pypi.tuna.tsinghua.edu.cn/simple  
+```  
+Test: `./venv/bin/python3 request_reports.py` (enter Apple ID and 2FA code).  
 
-**Important Notes**:
-1.  Browsers enforce HTTPS/CORS: HTTPS frontends *must* connect to HTTPS backends (requires SSL cert). Use tools like https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/.
-2.  Browsers may auto-redirect HTTP to HTTPS. Manually enter `http://` if needed.
+**IP Ban Check**: If `gsa_authenticate` fails, verify with:  
+```bash  
+curl -k https://gsa.apple.com/grandslam/GsService2 -v  
+```  
+If output shows `503 Service Temporarily Unavailable`, change your server IP.  
 
-### Usage
-Vue3-based frontend using Mapbox-GL for powerful rendering (supports future features like KML export).
+### 6. Install Node.js  
+```bash  
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash  
+\. "$HOME/.nvm/nvm.sh"  
+nvm install 22  
+node -v  # Verify v22.17.1  
+npm -v   # Verify v10.9.2  
+cd /path/to/project  
+npm i  
+```  
+**Edit `request_reports.mjs`**: If using a virtual env, replace `python3 request_reports.py` with `./venv/bin/python3 request_reports.py`.  
 
-#### Basic Usage Guide
-1.  **Configure Server Address**: In frontend settings, enter your server's address + `/query` suffix (e.g., `http://your-server-ip:3000/query`).
-2.  **Import Keys**: Use the `Item Management` dialog to "Parse JSON Key File" (the `.json` from `generate_keys.py`).
-3.  **Query Data**: In the `Data Selection` dialog:
-    - *Trajectory Points*: Historical path. Hover/click for details.
-    - *Heatmap*: Density visualization (darker = more visits).
-    - *Latest Location*: Most recent position (icon).
-**No Data?** Carry your NinjiaTag to a crowded area and wait for the server to populate the DB.
+### 7. Run Services via PM2  
+```bash  
+npm install pm2 -g  
+pm2 start server.mjs --name "query-server" --watch  
+pm2 start request_reports.mjs --name "report-task" --watch  
+pm2 save  
+pm2 startup systemd  # Auto-start on boot  
+sudo env PATH=$PATH:/home/user/.nvm/versions/node/v22.17.1/bin /home/user/.nvm/versions/node/v22.17.1/lib/node_modules/pm2/bin/pm2 startup systemd -u user --hp /home/user  
+```  
+**PM2 Commands**:  
+- `pm2 list` : View processes  
+- `pm2 logs <name>` : Check logs  
+- `pm2 restart <name>` : Reload  
 
-## Based on Open-Source Projects
-- Core FindMy functionality modified from https://github.com/seemoo-lab/openhaystack/.
-- Server-side deployment simplified by https://github.com/JJTech0130/pypush.
-- Android APK localization by https://gitee.com/lovelyelfpop/macless-haystack.
+### 8. Public Server Access  
+The frontend accesses the server at `http://<server_ip>:3000`. For public access:  
+- **Port forwarding** on your router.  
+- **Reverse proxies**: https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/, https://ngrok.com/, or https://www.zeronews.cc/.  
 
-## Miscellaneous (Under Development): Convert Data to KML
-*KML (Keyhole Markup Language) displays geographic data in Earth browsers (e.g., Google Earth).*
-```bash
-./request_reports.py > input.txt  # Generate JSON-like data
-python3 make_kml.py              # Reads input.txt, outputs *.kml files per key
-```
+---
 
-## Disclaimer
-**This repository is for research purposes only. You are responsible for your use of this code.**
+## Frontend Interface  
+Deploy your own or use our hosted version:  
+- HTTP: http://bd8cca.atomgit.net/NinjiaTagPage/  
+- HTTPS: https://bd8cca.atomgit.net/NinjiaTagPage/ (requires HTTPS backend).  
 
-I assume no liability for how you utilize any source code provided here. Using any files from this repository implies you accept all associated risks. **All files are provided solely for educational and/or research purposes.** This project is intended **only for item loss prevention**. **Misuse for illegal activities is strictly prohibited.** Always comply with local laws and regulations.
+Source: https://atomgit.com/bd8cca/NinjiaTagPage (Vue3 + Mapbox-GL).  
+
+### Usage  
+1. In the frontend, set the **server URL** to `http(s)://<your_server>:3000/query`.  
+2. Import hardware-generated `.json` keys via the **Item Management** dialog.  
+3. Query data by item/timeframe:  
+   - **Track Points**: Historical GPS points (hover for details).  
+   - **Heatmap**: Location frequency visualization.  
+   - **Latest Location**: Most recent position (icon-based).  
+*Note*: Walk through crowded areas to trigger location updates if no data appears.  
+
+---
+
+## Based on Open-Source Projects  
+- Core Find My logic: https://github.com/seemoo-lab/openhaystack/  
+- Server infrastructure: https://github.com/JJTech0130/pypush by @JJTech0130  
+- Android client: https://gitee.com/lovelyelfpop/macless-haystack by @lovelyelfpop  
+
+## To-Do: Convert Data to KML  
+*KML (Keyhole Markup Language) enables geographic data visualization in tools like Google Earth.*  
+```bash  
+./request_reports.py > input.txt  # Export raw data  
+python3 make_kml.py              # Generates KML per key  
+```  
+
+---
+
+## Disclaimer  
+> This repository is intended **for research purposes only**. You are solely responsible for complying with local laws. By using any code/files herein, you agree to:  
+> - Use this project **exclusively for item recovery**.  
+> - **Strictly prohibit** illegal activities (e.g., unauthorized tracking).  
+> - Accept all risks voluntarily.  
