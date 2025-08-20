@@ -16,9 +16,7 @@ DIY 兼容 FindMy 网络的定位标签/设备（长期记录）
 - [x] 支持热图显示（ Hotspot ），类似地理信息系统的人流密度显示，经常去过的地方颜色更深，不去或偶尔去的地方颜色浅。
 - [x] Web 前端支持密钥管理
 - [x] 地图采用开源的 Mapbox-GL 三维地图引擎，支持三维地形显示，渲染更加美观。
-
-- [ ] 待测试 Query Apple's Find My network,write into sqlite database,
-      convert to tracks(KML/GPX etc.)
+- [x] 支持选择单/多物品任意时间段 GPX(GPS eXchange Format)文件导出
 
 ### [Enlish Readme](README-EN.md)
 
@@ -58,7 +56,6 @@ DIY 兼容 FindMy 网络的定位标签/设备（长期记录）
   - [基于的开源项目](#基于的开源项目)
   - [杂项待开发 convert the data to KML](#杂项待开发-convert-the-data-to-kml)
   - [免责声明](#免责声明)
-
 
 ## 硬件 DIY
 
