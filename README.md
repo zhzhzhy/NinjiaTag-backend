@@ -277,14 +277,23 @@ python3 request_reports.py
 
 1. 保存进程列表
    `pm2 save`
+
    保存当前运行列表，防止重启后丢失。
+
 2. 设置系统开机自启
-   `pm2 startup` # 生成启动脚本
-   `sudo pm2 startup systemd # Linux systemd 系统`
-   `pm2 save # 关联保存的进程列表`
+
+   `pm2 startup` 生成启动脚本
+
+   `sudo pm2 startup systemd ` Linux systemd 系统自启动
+
+   `pm2 save` 关联保存的进程列表
+
    服务器重启后 PM2 自动恢复进程。
+
 3. 日志管理
+
    - 查看实时日志：
+
      `pm2 logs web-server # 指定进程名`
 
 ##### pm2 常用管理命令(部署时可忽略)
