@@ -19,9 +19,9 @@ DIY Find My Network-Compatible Tracking Tags/Devices (Long-Term Record)
 - [x] Uses open-source Mapbox-GL 3D engine with terrain rendering.
 - [x] Support export tracks to GPX
 
-### README-EN.md
+### [中文 Readme](README.md)
 
-!asset/UI1.png
+![UI](asset/UI1.png)
 
 ## Table of Contents
 
@@ -39,10 +39,7 @@ DIY Find My Network-Compatible Tracking Tags/Devices (Long-Term Record)
 
 Hardware DIY requires technical skill.
 
-**Pre-built Guides**:
 
-- ./usr_guide/2032_TAG.md
-- ./usr_guide/Mini_TAG.md
 
 ## Prerequisites
 
@@ -232,3 +229,4 @@ python3 make_kml.py              # Generates KML per key
 > - Use this project **exclusively for item recovery**.
 > - **Strictly prohibit** illegal activities (e.g., unauthorized tracking).
 > - Accept all risks voluntarily.
+
