@@ -18,7 +18,7 @@ DIY 兼容 FindMy 网络的定位标签/设备（长期记录）
 - [x] 地图采用开源的 Mapbox-GL 三维地图引擎，支持三维地形显示，渲染更加美观。
 - [x] 支持选择单/多物品任意时间段 GPX(GPS eXchange Format)文件导出
 
-### [Enlish Readme](README-EN.md)
+### [English Readme](README-EN.md)
 
 ![UI](asset/UI1.png)
 
@@ -382,3 +382,4 @@ this script reads input.txt generated with request_reports.py and writes for eac
 此存储库仅用于研究目的，此代码的使用由您负责。
 
 对于您选择如何使用此处提供的任何源代码，我概不负责。使用此存储库中提供的任何文件，即表示您同意自行承担使用风险。再次重申，此处提供的所有文件仅用于教育和或研究目的。本项目仅用于物品的防丢，严禁用于非法用途，使用时请遵守当地的法律法规。
+
